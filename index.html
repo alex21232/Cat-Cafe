@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Cat Cafe | Café & Compañía Felina</title>
+  <!-- Fuentes y estilos base -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <!-- Font Awesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #F9F5F0;
+      color: #3E2A2A;
+      scroll-behavior: smooth;
+    }
+
+    /* Paleta neutra + beige + café */
+    :root {
+      --beige-claro: #FCF8F0;
+      --beige-medio: #F3E9DA;
+      --cafe-suave: #C7A88A;
+      --cafe-principal: #9C7B5C;
+      --cafe-oscuro: #5A3E2B;
+      --gris-calido: #E4DCD3;
+      --sombra: 0 12px 28px rgba(0,0,0,0.05), 0 2px 4px rgba(0,0,0,0.02);
+    }
+
+    /* navbar */
+    .navbar {
+      background-color: #FFFFFFE6;
+      backdrop-filter: blur(12px);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid var(--cafe-suave);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.7rem;
+      font-weight: 700;
+      color: var(--cafe-oscuro);
+    }
+
+    .logo i {
+      font-size: 2rem;
+      color: #B57C48;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      font-weight: 500;
+      color: var(--cafe-oscuro);
+      transition: 0.2s;
+      font-size: 1rem;
+      padding: 0.3rem 0;
+      border-bottom: 2px solid transparent;
+    }
+
+    .nav-links a:hover {
+      border-bottom-color: var(--cafe-principal);
+      color: #8B6343;
+    }
+
+    /* boton general */
+    .btn-cafe {
+      display: inline-block;
+      background-color: var(--cafe-principal);
+      color: white;
+      padding: 0.8rem 2rem;
+      border-radius: 40px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: 0.2s ease;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
+
+    .btn-cafe:hover {
+      background-color: var(--cafe-oscuro);
+      transform: translateY(-2px);
+    }
+
+    /* secciones generales */
+    section {
+      padding: 5rem 2rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .section-title {
+      font-size: 2.3rem;
+      font-weight: 600;
+      margin-bottom: 2rem;
+      text-align: center;
+      letter-spacing: -0.3px;
+      color: #5A3E2B;
+      position: relative;
+    }
+
+    .section-title:after {
+      content: '';
+      display: block;
+      width: 70px;
+      height: 4px;
+      background: var(--cafe-suave);
+      margin: 10px auto 0;
+      border-radius: 4px;
+    }
+
+    /* Hero / Inicio con foto expandida (full viewport) */
+    .hero {
+      min-height: 95vh;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      background: linear-gradient(95deg, rgba(252,248,240,0.88) 0%, rgba(243,233,218,0.65) 100%), 
+                  url('https://images.pexels.com/photos/982300/pexels-photo-982300.jpeg?auto=compress&cs=tinysrgb&w=1600');
+      background-size: cover;
+      background-position: center 35%;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      border-radius: 0 0 48px 48px;
+      margin-bottom: 1rem;
+      padding: 2rem 3rem;
+    }
+
+    .hero-content {
+      max-width: 650px;
+      background: rgba(255, 252, 245, 0.88);
+      backdrop-filter: blur(10px);
+      padding: 2.5rem 2.5rem;
+      border-radius: 56px;
+      box-shadow: var(--sombra);
+      border: 1px solid #f0e0cf;
+    }
+
+    .hero-content h1 {
+      font-size: 3.2rem;
+      font-weight: 800;
+      color: #3E2A1F;
+      margin-bottom: 1rem;
+    }
+
+    .hero-content p {
+      font-size: 1.2rem;
+      line-height: 1.5;
+      margin-bottom: 2rem;
+      color: #4f3a2c;
+    }
+
+    /* catálogo de cafés (6 cards) */
+    .catalogo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .card-cafe {
+      background: white;
+      border-radius: 32px;
+      overflow: hidden;
+      box-shadow: var(--sombra);
+      transition: all 0.25s;
+      border: 1px solid #EDE0D4;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card-cafe:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 30px -12px rgba(94, 54, 38, 0.18);
+    }
+
+    .card-img {
+      height: 210px;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .card-info {
+      padding: 1.5rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card-info h3 {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+      color: #61432e;
+    }
+
+    .precio {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #9C7B5C;
+      margin: 0.6rem 0;
+    }
+
+    .desc-cafe {
+      color: #6b4f3a;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+      line-height: 1.4;
+    }
+
+    /* carrusel de gatos mejorado (8 gatos) */
+    .gatos-section {
+      background-color: var(--beige-medio);
+      border-radius: 60px;
+      margin: 1rem auto 2rem;
+      padding: 4rem 2rem;
+    }
+
+    .carousel-container {
+      position: relative;
+      max-width: 1200px;
+      margin: 0 auto;
+      overflow: hidden;
+      border-radius: 48px;
+      background-color: #FEFAF5;
+      box-shadow: var(--sombra);
+    }
+
+    .carousel-track {
+      display: flex;
+      transition: transform 0.4s ease-in-out;
+    }
+
+    .carousel-slide {
+      min-width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: stretch;
+      gap: 1.8rem;
+      padding: 2rem 2rem;
+      flex-wrap: wrap;
+    }
+
+    .cat-card {
+      background: white;
+      border-radius: 40px;
+      width: 230px;
+      padding: 1.5rem 1rem;
+      text-align: center;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+      transition: 0.2s;
+      flex: 1 1 200px;
+    }
+
+    .cat-card img {
+      width: 140px;
+      height: 140px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 4px solid var(--cafe-suave);
+      margin-bottom: 1rem;
+      box-shadow: 0 5px 12px rgba(0,0,0,0.1);
+    }
+
+    .cat-card h4 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin: 0.5rem 0;
+    }
+
+    .cat-card p {
+      color: #856e58;
+      font-style: italic;
+      font-size: 0.85rem;
+    }
+
+    .carousel-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: #fff6ef;
+      border: none;
+      font-size: 1.8rem;
+      cursor: pointer;
+      width: 46px;
+      height: 46px;
+      border-radius: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      color: #9C7B5C;
+      transition: 0.2s;
+      z-index: 10;
+    }
+
+    .carousel-btn:hover {
+      background-color: #f2e2d0;
+      color: #5A3E2B;
+    }
+
+    .btn-prev {
+      left: 16px;
+    }
+
+    .btn-next {
+      right: 16px;
+    }
+
+    .dots {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 1.5rem;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      background-color: #d1bba8;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .dot.active {
+      background-color: #9C7B5C;
+      width: 24px;
+      border-radius: 12px;
+    }
+
+    /* footer */
+    footer {
+      background-color: #E4D5C5;
+      text-align: center;
+      padding: 2rem;
+      color: #5A3E2B;
+      border-top: 1px solid #CDB79E;
+      font-size: 0.9rem;
+      margin-top: 2rem;
+    }
+
+    /* responsive */
+    @media (max-width: 800px) {
+      .navbar {
+        flex-direction: column;
+        gap: 0.8rem;
+      }
+      .nav-links {
+        gap: 1.2rem;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      .hero-content h1 {
+        font-size: 2.5rem;
+      }
+      .hero {
+        background-attachment: scroll;
+        padding: 1.5rem;
+      }
+      .section-title {
+        font-size: 1.9rem;
+      }
+      .carousel-slide {
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="logo">
+    <i class="fas fa-cat"></i>
+    <span>Cat Cafe</span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#inicio">Inicio</a></li>
+    <li><a href="#catalogo">Cafés</a></li>
+    <li><a href="#gatos">Nuestros Gatos</a></li>
+    <li><a href="#contacto" id="fake-contact">Contacto</a></li>
+  </ul>
+</nav>
+
+<!-- Sección Inicio - imagen expandida de gato (fondo full) con botón -->
+<section id="inicio" class="hero">
+  <div class="hero-content">
+    <h1>Bienvenido a Cat Cafe</h1>
+    <p>Sumérgete en una experiencia única: cafés artesanales rodeados de gatos rescatados. Relájate, disfruta y déjate consentir por ronroneos y aromas.</p>
+    <a href="#catalogo" class="btn-cafe">Explora nuestro menú <i class="fas fa-mug-hot"></i></a>
+  </div>
+</section>
+
+<!-- Catálogo de 6 Cafés (más variedad) -->
+<section id="catalogo">
+  <h2 class="section-title">Nuestros Cafés Especiales</h2>
+  <div class="catalogo-grid">
+    <!-- Café 1 -->
+    <div class="card-cafe">
+      <div class="card-img" style="background-image: url('https://images.pexels.com/photos/312418/pexels-photo-312418.jpeg?auto=compress&cs=tinysrgb&w=600');"></div>
+      <div class="card-info">
+        <h3>Latte Felino</h3>
+        <div class="precio">$4.50</div>
+        <p class="desc-cafe">Espresso suave con leche vaporizada y un toque de canela, decorado con arte de patitas.</p>
+      </div>
+    </div>
+    <!-- Café 2 -->
+    <div class="card-cafe">
+      <div class="card-img" style="background-image: url('https://images.pexels.com/photos/229861/pexels-photo-229861.jpeg?auto=compress&cs=tinysrgb&w=600');"></div>
+      <div class="card-info">
+        <h3>Moka Bigotes</h3>
+        <div class="precio">$5.25</div>
+        <p class="desc-cafe">Café, chocolate y crema batida, homenaje a los bigotes más curiosos.</p>
+      </div>
+    </div>
+    <!-- Café 3 -->
+    <div class="card-cafe">
+      <div class="card-img" style="background-image: url('https://images.pexels.com/photos/324028/pexels-photo-324028.jpeg?auto=compress&cs=tinysrgb&w=600');"></div>
+      <div class="card-info">
+        <h3>Capuchino Ronroneo</h3>
+        <div class="precio">$4.90</div>
+        <p class="desc-cafe">Capuchino tradicional con doble espuma y cacao en polvo. Perfecto para relajarte.</p>
+      </div>
+    </div>
+    <!-- Café 4 (nuevo) -->
+    <div class="card-cafe">
+      <div class="card-img" style="background-image: url('https://images.pexels.com/photos/302899/pexels-photo-302899.jpeg?auto=compress&cs=tinysrgb&w=600');"></div>
+      <div class="card-info">
+        <h3>Carajillo Gato</h3>
+        <div class="precio">$6.20</div>
+        <p class="desc-cafe">Café solo con un toque de licor de café y canela. Energía y sabor inolvidable.</p>
+      </div>
+    </div>
+    <!-- Café 5 -->
+    <div class="card-cafe">
+      <div class="card-img" style="background-image: url('https://images.pexels.com/photos/1064647/pexels-photo-1064647.jpeg?auto=compress&cs=tinysrgb&w=600');"></div>
+      <div class="card-info">
+        <h3>Iced Purr-latte</h3>
+        <div class="precio">$5.50</div>
+        <p class="desc-cafe">Latte frío de vainilla con hielo, cremoso y refrescante para días soleados.</p>
+      </div>
+    </div>
+    <!-- Café 6 -->
+    <div class="card-cafe">
+      <div class="card-img" style="background-image: url('https://images.pexels.com/photos/842571/pexels-photo-842571.jpeg?auto=compress&cs=tinysrgb&w=600');"></div>
+      <div class="card-info">
+        <h3>Affogato Miaus</h3>
+        <div class="precio">$6.90</div>
+        <p class="desc-cafe">Bola de helado de vainilla bañada en espresso caliente. Placer felino total.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Sección de Gatos con CARRUSEL (8 gatos hermosos) -->
+<section id="gatos" class="gatos-section">
+  <h2 class="section-title">Conoce a nuestros mininos</h2>
+  <div class="carousel-container">
+    <button class="carousel-btn btn-prev" id="prevBtn"><i class="fas fa-chevron-left"></i></button>
+    <div class="carousel-track" id="carouselTrack"></div>
+    <button class="carousel-btn btn-next" id="nextBtn"><i class="fas fa-chevron-right"></i></button>
+  </div>
+  <div class="dots" id="dotsContainer"></div>
+</section>
+
+<footer>
+  <p><i class="fas fa-heart" style="color:#C2815B;"></i> Cat Cafe — Un lugar donde el café y los gatos se encuentran. <br> &copy; 2025 — Calle de las Patitas 123, Ciudad Felina</p>
+</footer>
+
+<script>
+  // ---------- 8 GATOS PARA EL CARRUSEL (variedad) ----------
+  const catsData = [
+    {
+      nombre: "Miso",
+      desc: "Juguetón y cariñoso, ama dormir en repisas altas.",
+      img: "https://images.pexels.com/photos/617278/pexels-photo-617278.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop"
+    },
+    {
+      nombre: "Chai",
+      desc: "Curioso y elegante, siempre pide mimos a cambio de lamidas.",
+      img: "https://images.pexels.com/photos/45201/kitty-cat-kitten-pet-45201.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop"
+    },
+    {
+      nombre: "Luna",
+      desc: "Tranquila y observadora, le encanta el té de hierbabuena.",
+      img: "https://images.pexels.com/photos/2071873/pexels-photo-2071873.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop"
+    },
+    {
+      nombre: "Ginger",
+      desc: "Pelirrojo energético, el rey del catnap junto al ventanal.",
+      img: "https://images.pexels.com/photos/208637/pexels-photo-208637.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop"
+    },
+    {
+      nombre: "Oliver",
+      desc: "Amable y gordito, experto en ronroneos terapéuticos.",
+      img: "https://images.pexels.com/photos/127028/pexels-photo-127028.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop"
+    },
+    {
+      nombre: "Simba",
+      desc: "Valiente y curioso, siempre persigue juguetes con plumas.",
+      img: "https://images.pexels.com/photos/730896/pexels-photo-730896.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop"
+    },
+    {
+      nombre: "Nala",
+      desc: "Dulce y sociable, le fascina acurrucarse en tu regazo.",
+      img: "https://images.pexels.com/photos/3777622/pexels-photo-3777622.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop"
+    },
+    {
+      nombre: "Cookie",
+      desc: "Travieso y goloso, intentará robar un poco de tu galleta.",
+      img: "https://images.pexels.com/photos/1056251/pexels-photo-1056251.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop"
+    }
+  ];
+
+  // Configuración carrusel adaptable: se muestran 3 gatos por slide en desktop, 2 en tablet, 1 en móvil
+  const track = document.getElementById('carouselTrack');
+  const dotsContainer = document.getElementById('dotsContainer');
+  let currentIndex = 0;
+  let slides = [];
+  let totalSlides = 0;
+
+  function buildSlides() {
+    const width = window.innerWidth;
+    let itemsPerSlide = 3;
+    if (width <= 860) itemsPerSlide = 2;
+    if (width <= 560) itemsPerSlide = 1;
+    
+    // Dividir catsData en chunks según itemsPerSlide
+    const chunks = [];
+    for (let i = 0; i < catsData.length; i += itemsPerSlide) {
+      chunks.push(catsData.slice(i, i + itemsPerSlide));
+    }
+    
+    track.innerHTML = '';
+    dotsContainer.innerHTML = '';
+    slides = [];
+    
+    chunks.forEach((chunk, idx) => {
+      const slideDiv = document.createElement('div');
+      slideDiv.classList.add('carousel-slide');
+      // Ajustar estilo para que los gatos se distribuyan bien
+      slideDiv.style.display = 'flex';
+      slideDiv.style.flexWrap = 'wrap';
+      slideDiv.style.justifyContent = 'center';
+      slideDiv.style.alignItems = 'stretch';
+      slideDiv.style.gap = '1.8rem';
+      
+      chunk.forEach(cat => {
+        const catCard = document.createElement('div');
+        catCard.classList.add('cat-card');
+        const img = document.createElement('img');
+        img.src = cat.img;
+        img.alt = cat.nombre;
+        img.loading = "lazy";
+        const nombreH4 = document.createElement('h4');
+        nombreH4.textContent = cat.nombre;
+        const descP = document.createElement('p');
+        descP.textContent = cat.desc;
+        catCard.appendChild(img);
+        catCard.appendChild(nombreH4);
+        catCard.appendChild(descP);
+        slideDiv.appendChild(catCard);
+      });
+      track.appendChild(slideDiv);
+      slides.push(slideDiv);
+      
+      const dot = document.createElement('div');
+      dot.classList.add('dot');
+      if (idx === 0) dot.classList.add('active');
+      dot.addEventListener('click', () => goToSlide(idx));
+      dotsContainer.appendChild(dot);
+    });
+    
+    totalSlides = slides.length;
+    if (totalSlides === 0) return;
+    track.style.transform = `translateX(0%)`;
+    currentIndex = 0;
+    updateDots();
+  }
+  
+  function updateDots() {
+    const dots = document.querySelectorAll('.dot');
+    dots.forEach((dot, i) => {
+      if (i === currentIndex) dot.classList.add('active');
+      else dot.classList.remove('active');
+    });
+  }
+  
+  function goToSlide(index) {
+    if (index < 0) index = 0;
+    if (index >= totalSlides) index = totalSlides - 1;
+    currentIndex = index;
+    const offset = -currentIndex * 100;
+    track.style.transform = `translateX(${offset}%)`;
+    updateDots();
+  }
+  
+  function nextSlide() {
+    if (totalSlides === 0) return;
+    let newIndex = currentIndex + 1;
+    if (newIndex >= totalSlides) newIndex = 0;
+    goToSlide(newIndex);
+  }
+  
+  function prevSlide() {
+    if (totalSlides === 0) return;
+    let newIndex = currentIndex - 1;
+    if (newIndex < 0) newIndex = totalSlides - 1;
+    goToSlide(newIndex);
+  }
+  
+  function initCarousel() {
+    buildSlides();
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    // Reemplazar botones para evitar event listeners duplicados
+    const newPrev = prevBtn.cloneNode(true);
+    const newNext = nextBtn.cloneNode(true);
+    prevBtn.parentNode.replaceChild(newPrev, prevBtn);
+    nextBtn.parentNode.replaceChild(newNext, nextBtn);
+    
+    newPrev.addEventListener('click', prevSlide);
+    newNext.addEventListener('click', nextSlide);
+  }
+  
+  window.addEventListener('resize', () => {
+    initCarousel();
+  });
+  
+  initCarousel();
+  
+  // Smooth scroll para enlaces internos
+  document.querySelectorAll('.nav-links a').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+      const targetId = this.getAttribute('href');
+      if (targetId && targetId !== '#') {
+        if (targetId === '#contacto') {
+          e.preventDefault();
+          alert("📞 ¡Contáctanos! \n📧 @catcafe.com \n📍 Calle de las Patitas 123, Ciudad Felina \n📱 +58 0412 0812 321");
+          return;
+        }
+        const targetElem = document.querySelector(targetId);
+        if (targetElem) {
+          e.preventDefault();
+          targetElem.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }
+    });
+  });
+  
+  // botón del hero
+  document.querySelector('.hero .btn-cafe')?.addEventListener('click', (e) =>{
+    e.preventDefault();
+    document.querySelector('#catalogo').scrollIntoView({ behavior: 'smooth' });
+  });
+  
+  // contacto navbar
+  const fakeContact = document.getElementById('fake-contact');
+  if(fakeContact){
+    fakeContact.addEventListener('click', (e) => {
+      e.preventDefault();
+      alert("📧 contacto@catcafe.com | Tel: +58 0412 0812 321  \n🕒 Horarios: Lun-Dom 9am - 8pm \n🐱 Ven y relájate con nuestros gatos.");
+    });
+  }
+  
+  // Prevenir error si algún boton no existe
+  console.log("Cat Cafe - Web con más cafés y gatos expandida");
+</script>
+</body>
+</html>
